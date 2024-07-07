@@ -1,7 +1,16 @@
 export default function Pagination({ pageValue, movieResults }) {
-  const totalPages = movieResults && console.log(movieResults.total_pages);
   const currentPage = pageValue && parseInt(pageValue);
-  const displayPages = !currentPage
+
+  const totalPages = movieResults
+    ? movieResults.total_pages < 500
+      ? movieResults.total_pages
+      : 500
+    : 500;
+  let paginateValid = false;
+  if (currentPage >= 1 || currentPage <= totalPages) {
+    paginateValid = "block";
+  }
+  let displayPages = !currentPage
     ? [1, 2, 3, 4, 5]
     : currentPage <= 2
     ? [1, 2, 3, 4, 5]
@@ -12,17 +21,24 @@ export default function Pagination({ pageValue, movieResults }) {
         currentPage + 1,
         currentPage + 2,
       ];
+  if (currentPage >= totalPages - 2) {
+    displayPages = [
+      totalPages - 4,
+      totalPages - 3,
+      totalPages - 2,
+      totalPages - 1,
+      totalPages,
+    ];
+  }
 
   return (
-    <div>
-      {/* <a href="http://localhost:3000?page=1">page</a> */}
-      {/* {Array.from({ length: 5 }, (_, i) => i + 1).map((num) => (
-        <a href={"http://localhost:3000?page=" + num} key={num}>
-          {num}
-        </a>
-      ))} */}
+    <div style={{ display: paginateValid && paginateValid }}>
       {displayPages.map((item, i) => (
-        <a href={"http://localhost:3000?page=" + item} key={i}>
+        <a
+          style={{ color: currentPage === item && "red" }}
+          href={"http://localhost:3000?page=" + item}
+          key={i}
+        >
           {item}
         </a>
       ))}

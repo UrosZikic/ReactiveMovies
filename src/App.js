@@ -14,10 +14,13 @@ function App() {
   const curUrl = window.location.href;
   const urlObj = new URL(curUrl);
   const pageValue = urlObj.searchParams.get("page");
+
   useEffect(() => {
     (async function () {
       await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&page=${pageValue}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=${
+          pageValue ? pageValue : 1
+        }`
       )
         .then((res) => {
           if (!res.ok) {

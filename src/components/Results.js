@@ -1,9 +1,17 @@
 export default function Results({ pageValue, movieResults }) {
   const baseUrl = "https://image.tmdb.org/t/p/";
   const imageSize = "w400";
+  const totalPages = movieResults
+    ? movieResults.total_pages < 500
+      ? movieResults.total_pages
+      : 500
+    : 500;
+
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)" }}>
-      {!parseInt(pageValue) ? <h1>No Movies Found :\</h1> : false}
+      {parseInt(pageValue) < 1 && <h1>No Movies Found :\</h1>}
+      {parseInt(pageValue) > totalPages && <h1>No Movies Found :\</h1>}
+
       {movieResults
         ? movieResults.results.map((item, index) => (
             <div key={index}>
