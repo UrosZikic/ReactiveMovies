@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     (async function () {
       await fetch(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=${
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${
           pageValue ? pageValue : 1
         }`
       )
