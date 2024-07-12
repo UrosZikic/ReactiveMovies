@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../styles/output.css";
 
 export default function BrowseRecommend({
   browseValue,

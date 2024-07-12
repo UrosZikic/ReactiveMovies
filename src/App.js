@@ -1,5 +1,6 @@
 // import libraries
 import { useState, useEffect, useRef } from "react";
+
 // import css
 import "./styles/App.css";
 // component imports
@@ -36,6 +37,7 @@ function App() {
         else {
           setBrowseResults(retrieveData);
         }
+        console.log(data);
       })
       .catch((error) => console.error(error));
   }

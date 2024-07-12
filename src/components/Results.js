@@ -14,7 +14,7 @@ export default function Results({ pageValue, movieResults }) {
 
       {movieResults
         ? movieResults.results.map((item, index) => (
-            <div key={index}>
+            <a key={index} href={`/movie?movie=${item.id}`}>
               <img
                 src={
                   baseUrl +
@@ -29,7 +29,7 @@ export default function Results({ pageValue, movieResults }) {
                 alt={item.original_title}
               />
               <p>{item.original_title}</p>
-            </div>
+            </a>
           ))
         : false}
     </div>
