@@ -1,18 +1,31 @@
 import { useState, useRef, useEffect } from "react";
-import BrowseRecommend from "./BrowseRecommend";
-export default function Browser() {
-  const browserRef = useRef("test");
-  console.log(browserRef);
+import BrowseRecommend from "./browseRecommend";
+
+export default function Browser({
+  callMovies,
+  apiKey,
+  movieResults,
+  browseResults,
+}) {
+  const [browseValue, setBrowseValue] = useState(null);
+  const inputRef = useRef();
 
   function change(e) {
-    browserRef.current = e.target.value;
-    console.log(browserRef);
+    setBrowseValue(e.target.value);
   }
 
+  useEffect(() => inputRef.current.focus(), []);
   return (
-    <div>
-      <input type="text" id="browser" ref={browserRef} onChange={change} />
-      <BrowseRecommend />
+    <div
+      style={{ position: "relative", height: "100%", backgroundColor: "white" }}
+    >
+      <input type="text" id="browser" onChange={change} ref={inputRef} />
+      <BrowseRecommend
+        browseValue={browseValue}
+        callMovies={callMovies}
+        apiKey={apiKey}
+        browseResults={browseResults}
+      />
     </div>
   );
 }

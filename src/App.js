@@ -9,37 +9,50 @@ import Pagination from "./components/Pagination";
 
 function App() {
   const [movieResults, setMovieResults] = useState();
+  const [browseResults, setBrowseResults] = useState();
+
   // api
   const apiKey = "245d71936de55c199391618d2d244f64";
   const curUrl = window.location.href;
   const urlObj = new URL(curUrl);
   const pageValue = urlObj.searchParams.get("page");
 
-  useEffect(() => {
-    (async function () {
-      await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${
+  async function callMovies(url, validate) {
+    const api = url
+      ? url
+      : `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${
           pageValue ? pageValue : 1
-        }`
-      )
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("error 404");
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setMovieResults(data);
-          console.log(data);
-        })
-        .catch((error) => console.error(error));
-    })();
-  }, [pageValue]);
+        }`;
+    await fetch(api)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("error 404");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const retrieveData = data;
+        if (!validate) setMovieResults(retrieveData);
+        else {
+          setBrowseResults(retrieveData);
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
+  useEffect(() => {
+    callMovies();
+  }, []);
 
   //
   return (
     <>
-      <Nav />
+      <Nav
+        callMovies={callMovies}
+        apiKey={apiKey}
+        movieResults={movieResults}
+        browseResults={browseResults}
+      />
       <Results pageValue={pageValue} movieResults={movieResults} />
       <Pagination pageValue={pageValue} movieResults={movieResults} />
     </>

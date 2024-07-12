@@ -30,7 +30,6 @@ export default function Pagination({ pageValue, movieResults }) {
       totalPages,
     ];
   }
-  console.log(totalPages);
   return (
     <div style={{ display: paginateValid && paginateValid }}>
       {displayPages.map((item, i) => (
