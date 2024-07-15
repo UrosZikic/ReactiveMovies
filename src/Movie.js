@@ -13,7 +13,7 @@ export default function Movie() {
   const imageSize = "w200";
 
   async function callMovies() {
-    const api = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
+    const api = `https://api.themoviedb.org/3/search/person?api_key=${apiKey}&query=Daniel Radclife`;
     await fetch(api)
       .then((res) => {
         if (!res.ok) {
@@ -37,7 +37,11 @@ export default function Movie() {
     <>
       {movieResults && (
         <div>
-          <iframe src={movieResults.homepage} frameBorder="0"></iframe>
+          {/* <iframe
+            src={"https://www.youtube.com/embed/" + movieResults.results[1].key}
+            frameBorder="0"
+            title={movieResults.results[0].name}
+          ></iframe> */}
         </div>
       )}
     </>

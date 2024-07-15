@@ -1,30 +1,25 @@
 import { useState, useEffect } from "react";
 import "../styles/output.css";
 
-export default function BrowseRecommend({
-  browseValue,
-  callMovies,
-  apiKey,
-  browseResults,
-}) {
+export default function BrowseRecommend({ browseValue, callMovies, apiKey }) {
+  const [browseResults, setBrowseResults] = useState();
   const searchMovies = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${browseValue}`;
-  const [validate, setValidate] = useState(null);
+  // const [validate, setValidate] = useState(null);
 
   const baseUrl = "https://image.tmdb.org/t/p/";
   const imageSize = "w400";
 
   useEffect(() => {
-    if (browseValue) {
-      const intervalId = setTimeout(() => {
-        callMovies(searchMovies, true);
-        setValidate(true);
-      }, 500);
-
-      return () => clearTimeout(intervalId);
-    }
-  }, [searchMovies, browseValue]);
-
-  browseResults && console.log(browseResults);
+    const fetchData = async () => {
+      if (browseValue && browseValue.length > 3) {
+        const data = await callMovies(searchMovies, true);
+        setBrowseResults(data); // Update the state with the fetched data
+      } else {
+        setBrowseResults(false);
+      }
+    };
+    fetchData();
+  }, [searchMovies, browseValue, callMovies]);
 
   return (
     <ul
@@ -40,7 +35,6 @@ export default function BrowseRecommend({
       }}
     >
       {browseResults &&
-        browseValue.length > 3 &&
         browseResults.results.map(
           (item, id) =>
             id <= 4 && (

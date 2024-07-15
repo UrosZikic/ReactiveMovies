@@ -1,12 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import { callMovies } from "../api";
 import BrowseRecommend from "./browseRecommend";
 
-export default function Browser({
-  callMovies,
-  apiKey,
-  movieResults,
-  browseResults,
-}) {
+export default function Browser({ apiKey, movieResults, browseResults }) {
   const [browseValue, setBrowseValue] = useState(null);
   const inputRef = useRef();
 

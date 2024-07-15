@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 // import css
 import "./styles/App.css";
 // component imports
+import { callMovies } from "./api";
 import Nav from "./components/Nav";
 import Results from "./components/Results";
 import Pagination from "./components/Pagination";
@@ -17,36 +18,17 @@ function App() {
   const curUrl = window.location.href;
   const urlObj = new URL(curUrl);
   const pageValue = urlObj.searchParams.get("page");
-
-  async function callMovies(url, validate) {
-    const api = url
-      ? url
-      : `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${
-          pageValue ? pageValue : 1
-        }`;
-    await fetch(api)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("error 404");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        const retrieveData = data;
-        if (!validate) setMovieResults(retrieveData);
-        else {
-          setBrowseResults(retrieveData);
-        }
-        console.log(data);
-      })
-      .catch((error) => console.error(error));
-  }
-
   useEffect(() => {
-    callMovies();
+    const fetchData = async () => {
+      const data = await callMovies();
+      setMovieResults(data); // Update the state with the fetched data
+    };
+
+    const fetchID = setTimeout(fetchData, 500);
+
+    return () => clearTimeout(fetchID);
   }, []);
 
-  //
   return (
     <>
       <Nav
