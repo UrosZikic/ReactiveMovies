@@ -7,7 +7,7 @@ const pageValue = urlObj.searchParams.get("page");
 export async function callMovies(url, validate) {
   const api = url
     ? url
-    : `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${
+    : `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=${
         pageValue ? pageValue : 1
       }`;
   try {
@@ -16,6 +16,7 @@ export async function callMovies(url, validate) {
       throw new Error("error 404");
     }
     const data = await res.json();
+    console.log(api, data);
     return data;
   } catch (error) {
     console.error(error);

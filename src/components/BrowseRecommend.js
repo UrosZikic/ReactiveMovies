@@ -47,20 +47,24 @@ export default function BrowseRecommend({ browseValue, callMovies, apiKey }) {
                   width: "600px",
                 }}
               >
-                <img
-                  style={{
-                    height: "55px",
-                    width: "100px",
-                    objectFit: "contain",
-                  }}
-                  src={
-                    baseUrl +
-                    imageSize +
-                    (item.backdrop_path ? item.backdrop_path : item.poster_path)
-                  }
-                  alt={item.original_title}
-                />
-                <p>{item.original_title}</p>
+                <a href={`/movie?movie=${item.id}`} style={{ display: "flex" }}>
+                  <img
+                    style={{
+                      height: "55px",
+                      width: "100px",
+                      objectFit: "contain",
+                    }}
+                    src={
+                      baseUrl +
+                      imageSize +
+                      (item.backdrop_path
+                        ? item.backdrop_path
+                        : item.poster_path)
+                    }
+                    alt={item.original_title}
+                  />
+                  <p>{item.original_title}</p>
+                </a>
               </li>
             )
         )}

@@ -16,6 +16,7 @@ export default function Browser({ apiKey, movieResults, browseResults }) {
       style={{ position: "relative", height: "100%", backgroundColor: "white" }}
     >
       <input type="text" id="browser" onChange={change} ref={inputRef} />
+      <a href={`/search?query=${browseValue}`}>search</a>
       <BrowseRecommend
         browseValue={browseValue}
         callMovies={callMovies}

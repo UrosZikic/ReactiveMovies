@@ -24,10 +24,9 @@ function App() {
       setMovieResults(data); // Update the state with the fetched data
     };
 
-    const fetchID = setTimeout(fetchData, 500);
-
-    return () => clearTimeout(fetchID);
+    fetchData();
   }, []);
+  console.log(movieResults);
 
   return (
     <>
